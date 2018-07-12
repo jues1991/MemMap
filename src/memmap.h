@@ -9,7 +9,7 @@ public:
     MemMap();
     ~MemMap();
 
-    bool map(const char* szFileName);
+    bool map(const char* szFileName, const bool is_share = true);
     void unMap();
 
     void* getData()  { return m_pData; }
