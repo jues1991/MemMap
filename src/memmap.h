@@ -36,7 +36,10 @@ public:
         }
         T *t = (T*)pos;
         //
-        new(t) T(args...);
+        if ( this->m_position != (size_t)position )
+        {
+            new(t) T(args...);
+        }
         //
         return t;
     }
@@ -57,6 +60,9 @@ public:
             {
                 (*this->m_position2) = this->m_position;
             }
+
+            //
+            new(t) T(args...);
         }
         //
         return t;
@@ -92,9 +98,13 @@ public:
         *p = count;
         //
         T *t = (T*)(p+1);
-        for (size_t i=0;count>i;i++)
+
+        if ( this->m_position != (size_t)position )
         {
-            new(t+i) T(args...);
+            for (size_t i=0;count>i;i++)
+            {
+                new(t+i) T(args...);
+            }
         }
         //
         return t;
@@ -117,6 +127,12 @@ public:
             if ( nullptr != this->m_position2 )
             {
                 (*this->m_position2) = this->m_position;
+            }
+
+            //
+            for (size_t i=0;count>i;i++)
+            {
+                new(t+i) T(args...);
             }
         }
         //
