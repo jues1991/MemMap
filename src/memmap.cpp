@@ -13,7 +13,7 @@ MemMap::~MemMap()
     unMap();
 }
 
-bool MemMap::map(const char* szFileName,const bool is_share)
+bool MemMap::map(const char* szFileName,void *addr,const bool is_share)
 {
     unMap();
     m_nFile = open(szFileName, O_RDWR);
@@ -30,8 +30,12 @@ bool MemMap::map(const char* szFileName,const bool is_share)
     //int pageSize = getpagesize();
     //if ( 0 == (m_uSize % pageSize) )
     {
-        m_pData = mmap(0, m_uSize, PROT_READ|PROT_WRITE, (true==is_share)? MAP_SHARED : MAP_PRIVATE, m_nFile, 0);
-        if (MAP_FAILED != m_pData) { return true;}
+        m_pData = mmap(addr, m_uSize, PROT_READ|PROT_WRITE, (true==is_share)? MAP_SHARED : MAP_PRIVATE, m_nFile, 0);
+        if (MAP_FAILED != m_pData)
+        {
+            this->m_position = (size_t)m_pData;
+            return true;
+        }
     }
 
     close(m_nFile);
