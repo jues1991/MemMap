@@ -11,7 +11,7 @@ public:
     MemMap();
     ~MemMap();
 
-    bool map(const char* szFileName,void *addr = nullptr, const bool is_share = true);
+    bool map(const char* szFileName, const bool &readOnly,void *addr = nullptr, const bool isShare = true );
     void unMap();
 
     void* getData()  { return this->m_pData; }
