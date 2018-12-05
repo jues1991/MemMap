@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     MemMap m;
 
     //
-    if ( false == m.map("../MemMapDemo/1.txt") ){
+    if ( false == m.map("../MemMapDemo/1.txt",false) ){
         return false;
     }
     //
